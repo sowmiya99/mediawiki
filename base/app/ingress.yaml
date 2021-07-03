@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: deployment
+  namespace: namespace
+  labels:
+    app: deployment
+  annotations:
+    kubernetes.io/ingress.allow-http: "false"
+spec:
+  rules:
+    - host: 'mediawiki.thoughtworks.io'
+      http:
+        paths:
+          - backend:
+              serviceName: mediawiki
+              servicePort: http
