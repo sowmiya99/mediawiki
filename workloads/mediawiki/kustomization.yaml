@@ -1,0 +1,33 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+bases:
+  - ../../base/app/
+namespace: mediawiki
+namePrefix: mediawiki-
+replicas:
+  - name: deployment
+    count: 1
+commonLabels:
+  app: mediawiki
+resources:
+  - sealed-secret.yaml
+configMapGenerator:
+  - name: configmap
+    behavior: replace
+    literals:
+      - WIKI_NAME="TH_WIKI"
+      - WIKI_ADMIN=Admin
+      - MEDIAWIKI_DBTYPE=mysql
+      - MEDIAWIKI_DB_HOST="mysql"
+      - MEDIAWIKI_DB_PORT=3360
+images:
+  - name: docker-repository
+    newName: gcr.io/docker-repo/mediawiki
+    newTag: 'develop-e718b2a377412d50210d483ca6a533faf781a8af'
+patchesJson6902:
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: deployment
+    path: deployment-patch.yaml
