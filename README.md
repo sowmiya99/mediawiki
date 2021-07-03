@@ -11,8 +11,9 @@
 8. FluCD Pod deployed in namespace and confgiured to poll this repository every 2m and pull and deploy the configurations.
 
 # How deployment is automated ?
-This repository's folder contains FluxCD/Kustomize yaml configuration files.
-Flux pod deployed in cluster mediawiki namespace automatically pulls the changes from this repo and deploys the configurations.
+1. This repository's folder contains FluxCD/Kustomize yaml configuration files.
+2. Two workloads created for mediawiki and MySQL DB deployments.
+3. Flux pod deployed in cluster mediawiki namespace automatically pulls the changes from this repo workloads and deploys the configurations respectively.
 
 # How to validate the configuration files using kustomize ?
 cd mediawiki/workloads/
